@@ -1,0 +1,53 @@
+{
+  "name": "biblioteca-api",
+  "version": "1.0.0",
+  "description": "API REST para la gestión de libros de una biblioteca (Express + TypeScript + PostgreSQL + Drizzle ORM)",
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/server.js",
+    "typecheck": "tsc --noEmit",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:migrate:prod": "node dist/db/migrate.js",
+    "db:check": "drizzle-kit check",
+    "db:studio": "drizzle-kit studio"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Maynorpoz/biblioteca_api.git"
+  },
+  "keywords": [
+    "api",
+    "biblioteca",
+    "drizzle",
+    "postgresql",
+    "express"
+  ],
+  "author": "Maynorpoz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Maynorpoz/biblioteca_api/issues"
+  },
+  "homepage": "https://github.com/Maynorpoz/biblioteca_api#readme",
+  "dependencies": {
+    "dotenv": "^18.0.9",
+    "drizzle-orm": "^0.45.4",
+    "express": "^5.3.0",
+    "pg": "^8.23.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.6",
+    "@types/pg": "^8.23.1",
+    "drizzle-kit": "^0.31.11",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}

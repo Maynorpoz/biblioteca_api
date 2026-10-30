@@ -1,0 +1,12 @@
+# Dependencias y compilados
+node_modules/
+dist/
+
+# Variables de entorno reales (solo se sube .env.example)
+.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# OJO: la carpeta drizzle/ (migraciones) SÍ se sube al repositorio.
