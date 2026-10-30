@@ -33,6 +33,7 @@ export async function listarLibros(req: Request, res: Response) {
   const condiciones: SQL[] = [];
   if (filtros.autor) condiciones.push(ilike(libros.autor, `%${filtros.autor}%`));
   if (filtros.genero) condiciones.push(ilike(libros.genero, `%${filtros.genero}%`));
+  if (filtros.estado) condiciones.push(eq(libros.estado, filtros.estado));
 
   const resultado = await db
     .select()
@@ -68,6 +69,7 @@ export async function reemplazarLibro(req: Request, res: Response) {
     idioma: 'Español',
     paisPublicacion: 'Guatemala',
     sinopsis: null,
+    estado: 'disponible' as const,
     ...datos,
   };
   const [libro] = await guardar(() => db.update(libros).set(completo).where(eq(libros.id, id)).returning());

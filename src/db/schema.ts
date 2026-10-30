@@ -1,4 +1,7 @@
-import { integer, pgTable, smallint, text, timestamp, varchar } from 'drizzle-orm/pg-core';
+import { integer, pgEnum, pgTable, smallint, text, timestamp, varchar } from 'drizzle-orm/pg-core';
+
+// Migración 0001: estado de disponibilidad del libro
+export const estadoLibroEnum = pgEnum('estado_libro', ['disponible', 'prestado']);
 
 export const libros = pgTable('libros', {
   id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
@@ -12,8 +15,11 @@ export const libros = pgTable('libros', {
   idioma: varchar('idioma', { length: 40 }).notNull().default('Español'),
   paisPublicacion: varchar('pais_publicacion', { length: 60 }).notNull().default('Guatemala'),
   sinopsis: text('sinopsis'),
+  // Agregado en la migración 0001
+  estado: estadoLibroEnum('estado').notNull().default('disponible'),
   fechaRegistro: timestamp('fecha_registro', { withTimezone: true }).notNull().defaultNow(),
 });
 
 export type Libro = typeof libros.$inferSelect;
 export type NuevoLibro = typeof libros.$inferInsert;
+export type EstadoLibro = (typeof estadoLibroEnum.enumValues)[number];

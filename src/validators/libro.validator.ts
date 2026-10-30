@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { estadoLibroEnum } from '../db/schema.js';
 
 // Mensajes de error de Zod en español
 z.config(z.locales.es());
@@ -11,6 +12,10 @@ const isbn = z
   .trim()
   .transform((valor) => valor.replace(/[-\s]/g, '').toUpperCase())
   .pipe(z.string().regex(/^(\d{9}[\dX]|\d{13})$/, 'El ISBN debe tener 10 o 13 dígitos'));
+
+const estado = z.enum(estadoLibroEnum.enumValues, {
+  error: `El estado debe ser uno de: ${estadoLibroEnum.enumValues.join(', ')}`,
+});
 
 const textoOpcional = (max: number) => z.string().trim().min(1).max(max).nullable().optional();
 
@@ -31,6 +36,7 @@ export const crearLibroSchema = z.strictObject({
   idioma: z.string().trim().min(1).max(40).optional(),
   paisPublicacion: z.string().trim().min(1).max(60).optional(),
   sinopsis: z.string().trim().max(5000).nullable().optional(),
+  estado: estado.optional(),
 });
 
 // PUT: reemplazo completo, se exigen los mismos campos que al crear
@@ -48,4 +54,5 @@ export const idParamSchema = z.object({
 export const listarLibrosQuerySchema = z.strictObject({
   autor: z.string().trim().min(1).optional(),
   genero: z.string().trim().min(1).optional(),
+  estado: estado.optional(),
 });
